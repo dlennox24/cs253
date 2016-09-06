@@ -8,7 +8,7 @@ using std::ostream;
 
 class Histogram{
 public:
-   
-}
+
+};
 
 #endif // HISTOGRAM_H_INCLUDE

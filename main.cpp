@@ -9,7 +9,7 @@ using std::ifstream;
 int main(int argc, char* argv[]){
    if(argc != 2){
       cerr << "Invalid number of arguments!" << endl;
-      cerr << "Usage: " << arg0 << " filename" << endl;
+      cerr << "Usage: " << argv[0] << " filename" << endl;
       return -1;
    }
 
