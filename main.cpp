@@ -1,4 +1,6 @@
 #include <histogram.h>
+#include <string>
+using std::string;
 #include <iostream>
 using std::cout;
 using std::cerr;
@@ -14,9 +16,11 @@ int main(int argc, char* argv[]){
       return -1;
    }
 
-   string filename(argv[1]);
-   string filetype(filename.substr(s.find("."),filename.length));
-   if(filetype.compare("txt") != 0){
+   //Check to ensure the file name is a .txt
+   string filename(argv[1]); //convert char* to string
+   //substring of filename after "."
+   string filetype(filename.substr(filename.find("."),filename.length()));
+   if(filetype.compare(".txt") != 0){
       cerr << "File must be of the type .txt" << endl;
       return -1;
    }
