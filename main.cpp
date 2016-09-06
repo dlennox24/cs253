@@ -20,12 +20,17 @@ int main(int argc, char* argv[]){
       return -1;
    }
 
-   int in;
-   istr >> in;
-   if(istr.fail()){
-      cerr << "Non-integer value found in input file!" << endl;
-      cerr << "All values must be integers!" << endl;
-      return -1;
+   while(!istr.eof()){
+      int in;
+      istr >> in;
+      if(istr.fail()){
+         cerr << "Non-integer value found in input file!" << endl;
+         cerr << "All values must be integers!" << endl;
+         return -1;
+      }else{
+         cout << "Value: " << in << endl;
+      }
+      free(in);
    }
 
    return 0;
