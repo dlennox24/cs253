@@ -20,17 +20,23 @@ int main(int argc, char* argv[]){
       return -1;
    }
 
-   while(!istr.eof()){
-      int in;
+   int in;
+   while(true){
       istr >> in;
+      if(istr.eof()){
+         break;
+      }
+
       if(istr.fail()){
-         cerr << "Non-integer value found in input file!" << endl;
-         cerr << "All values must be integers!" << endl;
+         cerr << in << "All values must be integers!" << endl;
+         return -1;
+      }else if(in > 255 || in < 0){
+         cerr << in << ": All values must be in the range 0-255!" << endl;
          return -1;
       }else{
-         cout << "Value: " << in << endl;
+         cout << "Value: [" << in << "]" << endl;
+         cout << "-----------" << endl;
       }
-      free(in);
    }
 
    return 0;
