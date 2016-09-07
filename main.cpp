@@ -1,6 +1,4 @@
-#include <histogram.h>
-#include <string>
-using std::string;
+#include <Histogram.h>
 #include <iostream>
 using std::cout;
 using std::cerr;
@@ -8,11 +6,18 @@ using std::endl;
 using std::string;
 #include <fstream>
 using std::ifstream;
+#include <math.h>
 
 int main(int argc, char* argv[]){
    if(argc != 2){
       cerr << "Invalid number of arguments!" << endl;
       cerr << "Usage: " << argv[0] << " filename" << endl;
+      return -1;
+   }
+
+   ifstream istr(argv[1]);
+   if(istr.fail()){
+      cerr << "Error reading file: "<< argv[1] << endl;
       return -1;
    }
 
@@ -25,14 +30,9 @@ int main(int argc, char* argv[]){
       return -1;
    }
 
-   ifstream istr(argv[1]);
-   if(istr.fail()){
-      cerr << "Error reading file: "<< argv[1] << endl;
-      return -1;
-   }
-
    int in;
    bool emptyFile = true;
+   Histogram valueCount;
    while(true){
       istr >> in;
       if(istr.eof()){
@@ -47,15 +47,18 @@ int main(int argc, char* argv[]){
          return -1;
       }else{
          emptyFile = false;
-         cout << "Value: [" << in << "]" << endl;
-         cout << "-----------" << endl;
+         valueCount.increment(floor(in/4));
+         // cout << "Value: [" << in << "]" << endl;
+         // cout << "-----------" << endl;
       }
    }
 
    if(emptyFile){
-      cerr << "File empty!" << endl;
+      cerr << "File is empty!" << endl;
       return -1;
    }
+
+   valueCount.print(cout);
 
    return 0;
 }
