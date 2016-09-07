@@ -1,4 +1,4 @@
-#include <Histogram.h>
+#include <histogram.h>
 #include <iostream>
 using std::cout;
 using std::cerr;
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
 
    //Check to ensure the file name is a .txt
    string filename(argv[1]); //convert char* to string
-   //substring of filename after "."
+   //substring of filename after "." to get the file extention
    string filetype(filename.substr(filename.find("."),filename.length()));
    if(filetype.compare(".txt") != 0){
       cerr << "File must be of the type .txt" << endl;
@@ -48,8 +48,6 @@ int main(int argc, char* argv[]){
       }else{
          emptyFile = false;
          valueCount.increment(floor(in/4));
-         // cout << "Value: [" << in << "]" << endl;
-         // cout << "-----------" << endl;
       }
    }
 
