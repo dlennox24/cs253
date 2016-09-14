@@ -3,6 +3,7 @@
 using std::cout;
 using std::cerr;
 using std::endl;
+using std::flush;
 using std::string;
 
 int main(int argc, char* argv[]){
@@ -20,14 +21,20 @@ int main(int argc, char* argv[]){
    if(success == -1){
       return -1;
    }
-   hist1.print(cout);
-   cout << "----normalize----" << endl;
+   // hist1.print(cout);
    hist1.normalize();
-   hist1.print(cout);
+   // hist1.print(cout);
 
    //Proccess second file
-   // Histogram hist2;
-   // hist1.read(argv[2]);
+   Histogram hist2;
+   success = hist2.read(argv[2]);
+   if(success == -1){
+      return -1;
+   }
+   hist2.normalize();
+   // hist2.print(cout);
+   double compare = hist1.multCompare(hist2);
+   cout << compare << endl;
 
    return 0;
 }
