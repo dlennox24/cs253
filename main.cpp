@@ -4,59 +4,30 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
-#include <fstream>
-using std::ifstream;
-#include <math.h>
 
 int main(int argc, char* argv[]){
-   if(argc != 2){
+   if(argc != 3){
       cerr << "Invalid number of arguments!" << endl;
-      cerr << "Usage: " << argv[0] << " filename" << endl;
+      cerr << "Usage: " << argv[0] << " filename1 filename2" << endl;
       return -1;
    }
 
-   ifstream istr(argv[1]);
-   if(istr.fail()){
-      cerr << "Error reading file: "<< argv[1] << endl;
+   //determine if read failed so main can return -1;
+   int success;
+   //Proccess first file
+   Histogram hist1;
+   success = hist1.read(argv[1]);
+   if(success == -1){
       return -1;
    }
+   hist1.print(cout);
+   cout << "----normalize----" << endl;
+   hist1.normalize();
+   hist1.print(cout);
 
-   //Check to ensure the file name is a .txt
-   string filename(argv[1]); //convert char* to string
-   //substring of filename after "." to get the file extention
-   string filetype(filename.substr(filename.find("."),filename.length()));
-   if(filetype.compare(".txt") != 0){
-      cerr << "File must be of the type .txt" << endl;
-      return -1;
-   }
-
-   int in;
-   bool emptyFile = true;
-   Histogram valueCount;
-   while(true){
-      istr >> in;
-      if(istr.eof()){
-         break;
-      }
-
-      if(istr.fail()){
-         cerr << in << ": All values must be integers!" << endl;
-         return -1;
-      }else if(in > 255 || in < 0){
-         cerr << in << ": All values must be in the range 0-255!" << endl;
-         return -1;
-      }else{
-         emptyFile = false;
-         valueCount.increment(floor(in/4));
-      }
-   }
-
-   if(emptyFile){
-      cerr << "File is empty!" << endl;
-      return -1;
-   }
-
-   valueCount.print(cout);
+   //Proccess second file
+   // Histogram hist2;
+   // hist1.read(argv[2]);
 
    return 0;
 }
