@@ -13,28 +13,36 @@ int main(int argc, char* argv[]){
       return -1;
    }
 
-   //determine if read failed so main can return -1;
-   int success;
-   //Proccess first file
    Histogram hist1;
-   success = hist1.read(argv[1]);
-   if(success == -1){
-      return -1;
-   }
-   // hist1.print(cout);
-   hist1.normalize();
-   // hist1.print(cout);
-
-   //Proccess second file
    Histogram hist2;
-   success = hist2.read(argv[2]);
-   if(success == -1){
+   // Read files and check for errors
+   if(hist1.read(argv[1]) == -1 || hist2.read(argv[2]) == -1){
       return -1;
    }
+
+   // Check that total pixels == w*h for both files
+   if(hist1.getPixelsSize() != (hist1.getWidth()*hist1.getHeight())
+   || hist2.getPixelsSize() != (hist2.getWidth()*hist2.getHeight())){
+      cerr << "Number of pixels does not match size parameters: " << endl;
+      cerr << "File 1: " << hist1.getPixelsSize() << " ?= " << hist1.getWidth()*hist1.getHeight() << endl;
+      cerr << "File 2: " << hist2.getPixelsSize() << " ?= " << hist2.getWidth()*hist2.getHeight() << endl;
+      return -1;
+   }
+
+   // Check w*h is the same for both files
+   if((hist1.getWidth()*hist1.getHeight()) != (hist2.getWidth()*hist2.getHeight())){
+      cerr << "Files are of different sizes" << endl;
+      cerr << (hist1.getWidth()*hist1.getHeight()) << " != " << (hist2.getWidth()*hist2.getHeight()) << endl;
+      return -1;
+   }
+
+   hist1.normalize();
    hist2.normalize();
-   // hist2.print(cout);
-   double compare = hist1.multCompare(hist2);
-   cout << compare << endl;
+
+   // Compare the Histograms
+   double compare = hist1.addMinCompare(hist2);
+   int sqDiff = hist1.sqDiffCompare(hist2);
+   cout << compare << " " << sqDiff << endl;
 
    return 0;
 }
