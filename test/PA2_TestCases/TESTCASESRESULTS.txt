@@ -1,0 +1,28 @@
+
+
+1. USING 204_right AND 777_right :
+FINAL DOT PRODUCT = 0.577947
+
+2. USING 204_right AND 776_right :
+FINAL DOT PRODUCT = 0.597841
+
+3. USING 777_right AND 776_right :
+FINAL DOT PRODUCT = 0.523046
+
+4. USING 204_right AND 204_right :
+FINAL DOT PRODUCT = 0.661952
+
+5. USING singletonmatch1 AND singletonmatch2 :
+FINAL DOT PRODUCT = 1.000000
+
+6. USING singletonmismatch1 AND singletonmismatch2 :
+FINAL DOT PRODUCT = 0.000000
+
+7. USING 204_right AND emptyfile :
+SHOULD THROW A CERR MESSAGE
+
+8. USING emptyfile AND 776_right :
+SHOULD THROW A CERR MESSAGE
+
+9.USING 204_right AND error_negative_input :
+SHOULD THROW A CERR MESSAGE

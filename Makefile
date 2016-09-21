@@ -13,4 +13,4 @@ clean:
 	rm -f *.o *~ $(EXE)
 
 tar:
-	tar -cvf ${CFILES} ${HFILES} Makefile $(EXE).tar
+	tar -cvf $(EXE).tar ${CFILES} ${HFILES} Makefile
