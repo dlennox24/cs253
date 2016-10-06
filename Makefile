@@ -1,10 +1,10 @@
-CFILES = main.cpp histogram.cpp
-HFILES = histogram.h
-OFILES = main.o histogram.o
+CFILES = main.cpp histogram.cpp image.cpp
+HFILES = histogram.h image.h
+OFILES = main.o histogram.o image.o
 
 CC = g++
 INC = -Wall -I.
-EXE = PA3
+EXE = PA4
 
 main: ${CFILES} ${HFILES}
 	$(CC) $(INC) ${CFILES} -o $(EXE)

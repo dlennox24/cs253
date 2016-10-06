@@ -11,75 +11,13 @@ using std::ifstream;
 
 Histogram::Histogram(){
    buckets = new double[64];
-   totalNodes = 0;
-   width = 0;
-   height = 0;
-   maxVal = 0;
-
    for(int i=0;i<64;i++){
       buckets[i]=0;
    }
 }
 Histogram::~Histogram(){
-   delete buckets;
-}
-
-int Histogram::read(char* filename){
-   ifstream istr(filename);
-   if(istr.fail()){
-      cerr << "Error reading file: "<< filename << endl;
-      return -1;
-   }
-
-   // Check that file is not empty
-   if(istr.eof()){
-      cerr << filename << " is empty!" << endl;
-      return -1;
-   }
-
-   // Check that format of first line is
-   // P2 <height> <width> <maxLegalPixelValue>
-   char charP, char2;
-   int w, h, maxVal;
-   istr.get(charP);
-   istr.get(char2);
-   if(istr.fail() || charP != 'P' || char2 != '2'){
-      cerr << filename << ": The first two values of the file must be P2" << endl;
-      return -1;
-   }
-   istr >> w >> h >> maxVal;
-   if(istr.fail() || w < 1 || h < 1 || maxVal != 255){
-      cerr << filename << ": Must have a width and height greater than 0 followed" << endl
-      << "by the max pixel value of 255" << endl
-      << "\twidth: " << w << endl
-      << "\theight: " << h << endl
-      << "\tmaxVal: " << maxVal << endl;
-      return -1;
-   }else{
-      setWidth(w);
-      setHeight(h);
-      setMaxVal(maxVal);
-   }
-   // cout << filename << endl << charP << char2 << " " << w << " " << h << " " << maxVal << endl;
-   int in;
-   while(true){
-      istr >> in;
-      if(istr.eof()){
-         break;
-      }
-      if(istr.fail()){
-         cerr << "All pixel values must be integers!" << endl;
-         return -1;
-      }else if(in > 255 || in < 0){
-         cerr << in << ": All pixel values must be in the range 0-255!" << endl;
-         return -1;
-      }else{
-         //increment the count of the bucket with the index floor(in/4)
-         increment(floor(in/4));
-         addPixel(in);
-      }
-   }
-   return 0;
+   delete buckets [];
+	buckets = NULL;
 }
 
 void Histogram::normalize(){
