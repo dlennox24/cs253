@@ -10,14 +10,17 @@ using std::ifstream;
 #include <math.h>
 
 Histogram::Histogram(){
+   totalNodes = 0;
    buckets = new double[64];
    for(int i=0;i<64;i++){
       buckets[i]=0;
    }
+   cout<<"histogram constructor"<<endl;
 }
 Histogram::~Histogram(){
    delete [] buckets;
-	// buckets = NULL;
+	buckets = NULL;
+   cout<<"histogram destructor"<<endl;
 }
 
 void Histogram::normalize(){
@@ -51,9 +54,10 @@ double Histogram::addMinCompare(const Histogram& hist){
    double compareValue = 0.0;
    for(int i=0;i<64;i++){
       if(getBucket(i)>hist.getBucket(i)){
+         // cout<<getBucket(i)<<endl;
          compareValue += hist.getBucket(i);
       }else{
-         compareValue += getBucket(i);
+         compareValue += this->getBucket(i);
       }
    }
    return compareValue;

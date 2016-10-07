@@ -3,11 +3,15 @@ HFILES = histogram.h image.h
 OFILES = main.o histogram.o image.o
 
 CC = g++
-INC = -Wall -I. -g
+FLAGS = -I.
+FLAGSDEV = -Wall -g
 EXE = PA4
 
 main: ${CFILES} ${HFILES}
-	$(CC) $(INC) ${CFILES} -o $(EXE)
+	$(CC) $(FLAGS) ${CFILES} -o $(EXE)
+
+dev:
+	$(CC) $(FLAGS) $(FLAGSDEV) ${CFILES} -o $(EXE)
 
 clean:
 	rm -f *.o *~ $(EXE)

@@ -16,18 +16,21 @@ using std::vector;
 class Image{
 public:
    Image();
+   // Image(const Image &imageObj);
    ~Image();
-	// reads a file and attempts to add image data
+   // reads a file and attempts to add image data
    int read(const char* filename);
    // Return the width of the image data
    inline int getWidth() const {return width;}
+   // Return the width of the image data
+   inline string getFname() const {return fname;}
    // Return the height of the image data
    inline int getHeight() const {return height;}
    // Gets the max legal pixel value
    inline int getMaxVal() const {return maxVal;}
    // Gets the whole pixels vector
    inline vector<int> getPixels() const {return pixels;}
-	// Gets the whole pixels vector
+   // Gets the whole pixels vector
    inline Histogram getHist() const {return hist;}
    // Gets a single pixel at index i from pixels vector
    inline int getPixel(int i) const {return pixels.at(i);}
@@ -39,16 +42,18 @@ public:
    inline void setHeight(int val) {height = val;}
    // Set the max legal pixel value
    inline void setMaxVal(int val) {maxVal = val;}
+   // Set the max legal pixel value
+   inline void setFname(const char* filename) {fname = filename;}
 private:
    // Filename passed from arguments
-	string fname;
-	// Size of the image data
+   string fname;
+   // Size of the image data
    int width;
    int height;
    int maxVal;
    // All the individual pixel values
    vector<int> pixels;
-	// historgram of image
-	Histogram hist;
+   // historgram of image
+   Histogram hist;
 };
 #endif // IMAGE_H_INCLUDE
