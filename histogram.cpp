@@ -15,12 +15,12 @@ Histogram::Histogram(){
    for(int i=0;i<64;i++){
       buckets[i]=0;
    }
-   cout<<"histogram constructor"<<endl;
+   // cout<<"histogram constructor"<<endl;
 }
 Histogram::~Histogram(){
-   delete [] buckets;
-	buckets = NULL;
-   cout<<"histogram destructor"<<endl;
+   // delete [] buckets;
+	// buckets = NULL;
+   // cout<<"histogram destructor"<<endl;
 }
 
 void Histogram::normalize(){
@@ -57,7 +57,7 @@ double Histogram::addMinCompare(const Histogram& hist){
          // cout<<getBucket(i)<<endl;
          compareValue += hist.getBucket(i);
       }else{
-         compareValue += this->getBucket(i);
+         compareValue += getBucket(i);
       }
    }
    return compareValue;

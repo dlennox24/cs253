@@ -1,2 +1,8 @@
 test/single1.txt
 test/single2.txt
+test/single3.txt
+test/single4.txt
+test/single5.txt
+test/PA3_TestCases/depth_1_0000003.pgm
+test/PA3_TestCases/depth_1_0000004.pgm
+test/PA3_TestCases/depth_1_0001521.pgm

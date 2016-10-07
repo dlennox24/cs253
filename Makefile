@@ -6,6 +6,7 @@ CC = g++
 FLAGS = -I.
 FLAGSDEV = -Wall -g
 EXE = PA4
+TARPATH = tars/
 
 main: ${CFILES} ${HFILES}
 	$(CC) $(FLAGS) ${CFILES} -o $(EXE)
@@ -17,4 +18,4 @@ clean:
 	rm -f *.o *~ $(EXE)
 
 tar:
-	tar -cvf $(EXE).tar ${CFILES} ${HFILES} Makefile
+	tar -cvf $(TARPATH)$(EXE).tar ${CFILES} ${HFILES} Makefile

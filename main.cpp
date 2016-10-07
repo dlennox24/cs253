@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
 		return -1;
 	}
 
-	int numFiles = 0;
+	vector<Image*> images;
 	string filename;
 	while(true){
 		istr >> filename;
@@ -36,47 +36,36 @@ int main(int argc, char* argv[]){
 			break;
 		}
 		if(istr.fail()){
-			cerr << "1: An error occured while reading the file" << endl;
-			return -1;
-		}
-		numFiles++;
-	}
-
-	ifstream istr2(argv[1]);
-	Image* images = new Image[numFiles];
-	cout<<"*********************"<<endl;
-	for(int i=0;i<numFiles;i++){
-		istr2 >> filename;
-		if(istr.eof()){
-			break;
-		}
-		if(istr.fail()){
 			cerr << "An error occured while reading the file" << endl;
 			return -1;
 		}else{
-			images[i].read(filename.c_str());
+			Image* image = new Image;
+			images.push_back(image);
+			if(image->read(filename.c_str())==-1){
+				return -1;
+			}
 		}
 	}
-	if(numFiles<2){
+
+	if(images.size()<2){
 		cerr << "There must be at least 2 filenames in " << argv[1] << endl;
 		return -1;
 	}else{
-		for(int i=0;i<numFiles;i++){
+		for(unsigned int i=0;i<images.size();i++){
 			string mostSimilar;
 			double similarityError = 0.0;
-			for(int j=0;j<numFiles;j++){
+			for(unsigned int j=0;j<images.size();j++){
 				if(i != j){
-					double compare = images[i].getHist().addMinCompare(images[j].getHist());
+					double compare = images.at(i)->getHist().addMinCompare(images.at(j)->getHist());
 					if(compare >= similarityError){
-						mostSimilar = images[j].getFname();
-						cout<<"^^^^^^^^^^^^^^^^^^^^^^^^^^^^"<<endl;
+						mostSimilar = images.at(j)->getFname();
+						similarityError = compare;
 					}
 				}
 			}
-			cout<<"^^^^^^^^^789789^^^^^^^^^^^^^^^^^^^"<<endl;
+			cout<<images.at(i)->getFname()<<" "<<mostSimilar<<" "<<similarityError<<endl;
 		}
 	}
-	cout<<"----------------------"<<endl;
 
 	// // Free all images data
 	// for(unsigned int i=0;i<images.size();i++){

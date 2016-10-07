@@ -13,7 +13,7 @@ Image::Image(){
 	width = 0;
 	height = 0;
 	maxVal = 0;
-	cout<<"image constructor"<<endl;
+	// cout<<"image constructor"<<endl;
 }
 Image::~Image(){
 
@@ -66,7 +66,7 @@ int Image::read(const char* filename){
 			break;
 		}
 		if(istr.fail()){
-			cerr << "All pixel values must be integers!" << endl;
+			cerr << filename <<": All pixel values must be integers!" << endl;
 			return -1;
 		}else if(in > 255 || in < 0){
 			cerr << in << ": All pixel values must be in the range 0-255!" << endl;
