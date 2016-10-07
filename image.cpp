@@ -14,12 +14,9 @@ Image::Image(){
 	height = 0;
 	maxVal = 0;
 }
-Image::~Image(){
-   delete pixels [];
-	pixels = NULL;
-}
+Image::~Image(){}
 
-int Image::read(char* filename){
+int Image::read(const char* filename){
    ifstream istr(filename);
    if(istr.fail()){
       cerr << "Error reading file: "<< filename << endl;

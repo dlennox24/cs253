@@ -3,7 +3,7 @@ HFILES = histogram.h image.h
 OFILES = main.o histogram.o image.o
 
 CC = g++
-INC = -Wall -I.
+INC = -Wall -I. -g
 EXE = PA4
 
 main: ${CFILES} ${HFILES}

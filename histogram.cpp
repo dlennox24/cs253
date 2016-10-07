@@ -16,8 +16,8 @@ Histogram::Histogram(){
    }
 }
 Histogram::~Histogram(){
-   delete buckets [];
-	buckets = NULL;
+   delete [] buckets;
+	// buckets = NULL;
 }
 
 void Histogram::normalize(){
@@ -30,13 +30,13 @@ void Histogram::normalize(){
    }
 }
 
-int Histogram::sqDiffCompare(const Histogram& hist){
-   int sqSum = 0;
-   for(int i=0;i<int(getPixelsSize());i++){
-      sqSum += pow((getPixel(i) - hist.getPixel(i)),2);
-   }
-   return sqSum;
-}
+// int Histogram::sqDiffCompare(const Histogram& hist){
+//    int sqSum = 0;
+//    for(int i=0;i<int(getPixelsSize());i++){
+//       sqSum += pow((getPixel(i) - hist.getPixel(i)),2);
+//    }
+//    return sqSum;
+// }
 
 double Histogram::multCompare(const Histogram& hist){
    double compareValue = 0.0;

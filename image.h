@@ -9,7 +9,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
-#include <vector>;
+#include <vector>
 using std::vector;
 #include <histogram.h>
 
@@ -18,7 +18,7 @@ public:
    Image();
    ~Image();
 	// reads a file and attempts to add image data
-   int read(char* filename);
+   int read(const char* filename);
    // Return the width of the image data
    inline int getWidth() const {return width;}
    // Return the height of the image data
