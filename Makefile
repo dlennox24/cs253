@@ -1,8 +1,7 @@
 MC = main.cpp
-TC = test.cpp
-CFILES = histogram.cpp image.cpp
-HFILES = histogram.h image.h
-OFILES = main.o histogram.o image.o
+TC = testMain.cpp
+CFILES = histogram.cpp image.cpp data.cpp cluster.cpp
+HFILES = histogram.h image.h data.h cluster.h
 
 CC = g++
 FLAGS = -I.
@@ -16,7 +15,7 @@ main: ${CFILES} ${HFILES}
 dev:
 	$(CC) $(FLAGS) $(FLAGSDEV) $(MC) ${CFILES} -o $(EXE)
 
-test:
+testMain:
 	$(CC) $(FLAGS) $(FLAGSDEV) $(TC) ${CFILES} -o $(EXE)
 
 clean:

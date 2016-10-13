@@ -15,21 +15,15 @@ Histogram::Histogram(){
    for(int i=0;i<64;i++){
       buckets[i]=0;
    }
-   // cout<<"histogram constructor"<<endl;
 }
 Histogram::~Histogram(){
-   // delete [] buckets;
-	// buckets = NULL;
-   // cout<<"histogram destructor"<<endl;
+   delete [] buckets;
+	buckets = NULL;
 }
 
-void Histogram::normalize(){
+void Histogram::Normalize(){
    for(int i=0;i<64;i++){
-      // cout<<"--------------------"<<i<<"--------------------"<<endl;
-      // cout<<"Bucket: "<<getBucket(i)<<"\t"
-      // <<"totalNodes: "<<getTotalNodes()<<"\t"
-      // <<"b/tN: "<<getBucket(i)/getTotalNodes()<<endl;
-      setBucket(i,getBucket(i)/getTotalNodes());
+      this->SetBucket(i,this->Bucket(i)/this->TotalNodes());
    }
 }
 
@@ -41,40 +35,38 @@ void Histogram::normalize(){
 //    return sqSum;
 // }
 
-double Histogram::multCompare(const Histogram& hist){
+double Histogram::MultCompare(Histogram& hist){
    double compareValue = 0.0;
-   // cout<<hist.getBucket(18)<<endl;
    for(int i=0;i<64;i++){
-      compareValue += (getBucket(i)*hist.getBucket(i));
+      compareValue += (this->Bucket(i)*hist.Bucket(i));
    }
    return compareValue;
 }
 
-double Histogram::addMinCompare(const Histogram& hist){
+double Histogram::AddMinCompare(Histogram& hist){
    double compareValue = 0.0;
    for(int i=0;i<64;i++){
-      if(getBucket(i)>hist.getBucket(i)){
-         // cout<<getBucket(i)<<endl;
-         compareValue += hist.getBucket(i);
+      if(this->Bucket(i)>hist.Bucket(i)){
+         compareValue += hist.Bucket(i);
       }else{
-         compareValue += getBucket(i);
+         compareValue += this->Bucket(i);
       }
    }
    return compareValue;
 }
 
-bool Histogram::print(ostream& ostr){
+bool Histogram::Print(ostream& ostr){
    if(ostr.fail()){
       return false;
    }
    for(int i=0;i<64;i = i+4){
-      cout << getBucket(i) << "\t" << getBucket(i+1) << "\t"
-      << getBucket(i+2) << "\t" << getBucket(i+3) << endl;
+      cout << this->Bucket(i) << "\t" << this->Bucket(i+1) << "\t"
+      << this->Bucket(i+2) << "\t" << this->Bucket(i+3) << endl;
    }
    return true;
 }
 
-void Histogram::increment(int i){
+void Histogram::Increment(int i){
    buckets[i]++;
-   totalNodes++;
+   this->TotalNodes() += 1;
 }

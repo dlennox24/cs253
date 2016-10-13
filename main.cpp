@@ -8,6 +8,7 @@ using std::string;
 using std::ifstream;
 
 #include <image.h>
+#include <histogram.h>
 
 int main(int argc, char* argv[]){
 	if(argc != 2){

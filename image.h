@@ -16,18 +16,15 @@ using std::vector;
 class Image{
 public:
    Image();
-   // Image(const Image &imageObj);
-   ~Image();
-   // reads a file and attempts to add image data
-   int read(const char* filename);
-	inline int& width(){return width;}
-	inline int& height(){return height;}
-	inline int& maxVal(){return maxVal;}
-	inline string& fname(){return fname;}
-	inline vector<int>& pixels(){return pixels;}
-	inline Histogram& hist(){return Hist;}
-   inline int getPixel(int i) const {return pixels.at(i);}
-   inline void addPixel(int pixel) {pixels.push_back(pixel);}
+   bool Read(const char* filename); // reads a file and attempts to add image data
+	inline int& Width(){return width;}
+	inline int& Height(){return height;}
+	inline int& MaxVal(){return maxVal;}
+	inline string& Fname(){return fname;}
+	inline vector<int>& Pixels(){return pixels;}
+	inline Histogram& Hist(){return hist;}
+   inline int Pixel(int i) const {return pixels.at(i);}
+   inline void AddPixel(int pixel) {pixels.push_back(pixel);}
 private:
    // Filename passed from arguments
    string fname;
