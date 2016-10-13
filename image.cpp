@@ -54,9 +54,9 @@ int Image::read(const char* filename){
 		<< "\tmaxVal: " << maxVal << endl;
 		return -1;
 	}else{
-		setWidth(w);
-		setHeight(h);
-		setMaxVal(maxVal);
+		this->width() = w;
+		this->height() = h;
+		this->maxVal() = maxVal;
 	}
 
 	int in;
@@ -75,7 +75,7 @@ int Image::read(const char* filename){
 			// Increment the count of the bucket in the histogram of the image
 			hist.increment(floor(in/4));
 			// Add pixel to the pixels vector
-			addPixel(in);
+			this->addPixel(in);
 		}
 	}
 	hist.normalize();

@@ -20,30 +20,14 @@ public:
    ~Image();
    // reads a file and attempts to add image data
    int read(const char* filename);
-   // Return the width of the image data
-   inline int getWidth() const {return width;}
-   // Return the width of the image data
-   inline string getFname() const {return fname;}
-   // Return the height of the image data
-   inline int getHeight() const {return height;}
-   // Gets the max legal pixel value
-   inline int getMaxVal() const {return maxVal;}
-   // Gets the whole pixels vector
-   inline vector<int> getPixels() const {return pixels;}
-   // Gets the whole pixels vector
-   inline Histogram getHist() const {return hist;}
-   // Gets a single pixel at index i from pixels vector
+	inline int& width(){return width;}
+	inline int& height(){return height;}
+	inline int& maxVal(){return maxVal;}
+	inline string& fname(){return fname;}
+	inline vector<int>& pixels(){return pixels;}
+	inline Histogram& hist(){return Hist;}
    inline int getPixel(int i) const {return pixels.at(i);}
-   // Add a pixel to the vector pixels
    inline void addPixel(int pixel) {pixels.push_back(pixel);}
-   // Set the width of the image data
-   inline void setWidth(int val) {width = val;}
-   // Set the height of the image data
-   inline void setHeight(int val) {height = val;}
-   // Set the max legal pixel value
-   inline void setMaxVal(int val) {maxVal = val;}
-   // Set the max legal pixel value
-   inline void setFname(const char* filename) {fname = filename;}
 private:
    // Filename passed from arguments
    string fname;
