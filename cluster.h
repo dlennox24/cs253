@@ -16,11 +16,14 @@ using std::string;
 class Cluster{
 public:
    Cluster();
-	inline vector<Image>& Images(){return images;}
-	inline Histogram& Hist(){return hist;}
+   ~Cluster();
+   inline vector<Image*>& Images(){return *images;}
+   inline Image& ImageAt(int i){return *images->at(i);}
+   inline Histogram& Hist(){return *hist;}
+   void RecalcHist();
+   void Print();
 private:
-   int k; // K is the target number of clusters
-   vector<Image> images;
-	Histogram hist;
+   vector<Image*>* images;
+   Histogram* hist;
 };
 #endif // CLUSTER_H_INCLUDE

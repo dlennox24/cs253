@@ -13,13 +13,24 @@ Image::Image(){
 	width = 0;
 	height = 0;
 	maxVal = 0;
+	pixels = new vector<int>();
+	hist = new Histogram();
+}
+
+Image::~Image(){
+	// cout<<"DESTROYING IMAGE"<<endl;
+	pixels->clear();
+	delete pixels;
+	pixels = NULL;
+	delete hist;
+	hist = NULL;
 }
 
 bool Image::Read(const char* filename){
-	this->Fname() = filename;
+	SetFname(filename);
 	ifstream istr(filename);
 	if(istr.fail()){
-		cerr << "Error reading file: "<< filename << endl;
+		cerr << "Error reading file(image.cpp): "<< filename << endl;
 		return false;
 	}
 
@@ -42,8 +53,8 @@ bool Image::Read(const char* filename){
 
 	// Populate dimensions of image
 	istr >> w >> h >> maxVal;
-	if(istr.fail() || w < 1 || h < 1 || maxVal != 255){
-		cerr << filename << ": Must have a width and height greater than 0 followed" << endl
+	if(istr.fail() || w != 128 || h != 128 || maxVal != 255){
+		cerr << filename << ": Must have a width and height equal to 128 followed" << endl
 		<< "by the max pixel value of 255" << endl
 		<< "\twidth: " << w << endl
 		<< "\theight: " << h << endl
@@ -69,11 +80,19 @@ bool Image::Read(const char* filename){
 			return false;
 		}else{
 			// Increment the count of the bucket in the histogram of the image
-			hist.Increment(floor(in/4));
+			hist->Increment(floor(in/4));
 			// Add pixel to the pixels vector
-			this->AddPixel(in);
+			this->Pixels().push_back(in);
 		}
 	}
-	hist.Normalize();
+	hist->Normalize();
 	return true;
 }
+
+// int Image::AvgInvSqDiffCompare(Histogram& hist){
+// 	int sqSum = 0;
+// 	for(unsigned int i=0;i<;i++){
+// 		sqSum += pow((getPixel(i) - hist.getPixel(i)),2);
+// 	}
+// 	return sqSum;
+// }

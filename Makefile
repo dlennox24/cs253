@@ -6,7 +6,7 @@ HFILES = histogram.h image.h data.h cluster.h
 CC = g++
 FLAGS = -I.
 FLAGSDEV = -Wall -g
-EXE = PA5
+EXE = PA6
 TARPATH = tars/
 
 main: ${CFILES} ${HFILES}

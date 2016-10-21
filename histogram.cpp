@@ -17,8 +17,9 @@ Histogram::Histogram(){
    }
 }
 Histogram::~Histogram(){
+   // cout<<"DESTROYING HISTOGRAM"<<endl;
    delete [] buckets;
-	buckets = NULL;
+   buckets = NULL;
 }
 
 void Histogram::Normalize(){
@@ -26,14 +27,6 @@ void Histogram::Normalize(){
       this->SetBucket(i,this->Bucket(i)/this->TotalNodes());
    }
 }
-
-// int Histogram::sqDiffCompare(const Histogram& hist){
-//    int sqSum = 0;
-//    for(int i=0;i<int(getPixelsSize());i++){
-//       sqSum += pow((getPixel(i) - hist.getPixel(i)),2);
-//    }
-//    return sqSum;
-// }
 
 double Histogram::MultCompare(Histogram& hist){
    double compareValue = 0.0;
@@ -43,7 +36,7 @@ double Histogram::MultCompare(Histogram& hist){
    return compareValue;
 }
 
-double Histogram::AddMinCompare(Histogram& hist){
+double Histogram::SumMinCompare(Histogram& hist){
    double compareValue = 0.0;
    for(int i=0;i<64;i++){
       if(this->Bucket(i)>hist.Bucket(i)){
