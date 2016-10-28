@@ -8,6 +8,9 @@ using std::string;
 #include <fstream>
 using std::ifstream;
 #include <math.h>
+#include <regex>
+using std::regex;
+using std::regex_match;
 
 Image::Image(){
 	width = 0;
@@ -28,6 +31,10 @@ Image::~Image(){
 
 bool Image::Read(const char* filename){
 	SetFname(filename);
+	if(!regex_match(this->Fname(),regex("(class([0-9]+)_([0-9]+).pgm)"))){
+		cerr << "Invalid file name structure: " << filename << endl;
+		return false;
+	}
 	ifstream istr(filename);
 	if(istr.fail()){
 		cerr << "Error reading file(image.cpp): "<< filename << endl;

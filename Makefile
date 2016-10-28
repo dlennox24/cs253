@@ -4,9 +4,9 @@ CFILES = histogram.cpp image.cpp data.cpp cluster.cpp
 HFILES = histogram.h image.h data.h cluster.h
 
 CC = g++
-FLAGS = -I.
+FLAGS = -I. -std=gnu++11
 FLAGSDEV = -Wall -g
-EXE = PA6
+EXE = PA7
 TARPATH = tars/
 
 main: ${CFILES} ${HFILES}
