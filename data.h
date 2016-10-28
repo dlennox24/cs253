@@ -22,6 +22,7 @@ public:
 	inline Cluster& ClusterAt(int i){return *clusters->at(i);}
 	void Merge(int in, int from); // Merges clusters[from] into clusters[in]
 	void Print();
+	void Quality();
 private:
 	int k; // K is the target number of clusters
 	vector<Cluster*>* clusters;

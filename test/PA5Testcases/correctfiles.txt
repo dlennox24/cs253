@@ -1,0 +1,7 @@
+test/PA5Testcases/class1_00003.pgm
+test/PA5Testcases/class1_00004.pgm
+test/PA5Testcases/class2_01521.pgm
+test/PA5Testcases/class3_00263.pgm
+test/PA5Testcases/class3_00264.pgm
+test/PA5Testcases/class4_00379.pgm
+test/PA5Testcases/class4_00380.pgm

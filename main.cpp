@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
 		cerr<<"K must be >0"<<endl;
 		return -1;
 	}
-	if(atoi(argv[3])<1 || atoi(argv[3])>3){
+	if(atoi(argv[3])<1 || atoi(argv[3])>4){
 		cerr<<"Invalid compareType: "<<argv[3]<<endl;
 		return -1;
 	}
@@ -50,6 +50,9 @@ int main(int argc, char* argv[]){
 					break;
 					case 3:
 					compare = data.ClusterAt(i).Hist().SumMinCompare(data.ClusterAt(j).Hist());
+					break;
+					case 4:
+					compare = data.ClusterAt(i).Hist().SumMinCompare(data.ClusterAt(j).Hist());
 				}
 				if(compare > difference){
 					in = i;
@@ -68,6 +71,6 @@ int main(int argc, char* argv[]){
 		data.Merge(in,from);
 	}
 
-	data.Print();
+	data.Quality();
 	return 0;
 }

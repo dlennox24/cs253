@@ -7,6 +7,10 @@ using std::cerr;
 using std::endl;
 using std::string;
 using std::ifstream;
+#include <cstdlib>
+#include <sstream>
+using std::stringstream;
+using std::string;
 
 #include <data.h>
 
@@ -80,4 +84,49 @@ void Data::Print(){
 	for(unsigned int i=0;i<this->Clusters().size();i++){
 		this->ClusterAt(i).Print();
 	}
+}
+
+void Data::Quality(){
+	double total = 0.0;
+	double correct = 0.0;
+	for(unsigned int i=0;i<this->Clusters().size();i++){
+		vector<int> classes;
+		vector<int> counts;
+		for(unsigned int j=0;j<this->ClusterAt(i).Images().size();j++){
+			string fname = this->ClusterAt(i).ImageAt(j).Fname();
+			stringstream iss(fname);
+			getline(iss, fname, '_');
+			int classNum = fname.back() - '0';
+
+			int pos = -1;
+			for(unsigned int k=0;k<classes.size();k++){
+				if(classes.at(k) == classNum){
+					pos = k;
+					// cout<<"pos:"<<pos<<endl;
+					break;
+				}
+			}
+			if(pos == -1){
+				classes.push_back(classNum);
+				counts.push_back(1);
+			}else{
+				counts.at(pos) = counts.at(pos) +1;
+			}
+		}
+		
+		int high = -1;
+		for(unsigned int j=0;j<counts.size();j++){
+			if(counts.at(j) > high){
+				high = counts.at(j);
+			}
+			total += counts.at(j);
+		}
+		correct += high;
+		// cout<<pos<<endl;
+		// cout<<high<<endl<<"---"<<endl;
+	}
+	// cout<<"***************"<<endl;
+	// cout<<total<<endl<<correct<<endl;
+	double qual = correct/total;
+	cout<<qual<<endl;
 }

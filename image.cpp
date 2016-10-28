@@ -31,7 +31,7 @@ Image::~Image(){
 
 bool Image::Read(const char* filename){
 	SetFname(filename);
-	if(!regex_match(this->Fname(),regex("(class([0-9]+)_([0-9]+).pgm)"))){
+	if(!regex_match(this->Fname(),regex("([/a-zA-Z0-9_.-]*)(class([0-9]+)_([0-9]+).pgm)"))){
 		cerr << "Invalid file name structure: " << filename << endl;
 		return false;
 	}
