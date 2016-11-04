@@ -37,7 +37,7 @@ bool Image::Read(const char* filename){
 	}
 	ifstream istr(filename);
 	if(istr.fail()){
-		cerr << "Error reading file(image.cpp): "<< filename << endl;
+		cerr << "(Image::Read) Error reading file: "<< filename << endl;
 		return false;
 	}
 

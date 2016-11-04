@@ -1,12 +1,12 @@
 MC = main.cpp
 TC = testMain.cpp
-CFILES = histogram.cpp image.cpp data.cpp cluster.cpp
-HFILES = histogram.h image.h data.h cluster.h
+CFILES = histogram.cpp image.cpp data.cpp cluster.cpp perceptron.cpp
+HFILES = histogram.h image.h data.h cluster.h perceptron.h
 
 CC = g++
 FLAGS = -I. -std=gnu++11
 FLAGSDEV = -Wall -g
-EXE = PA7
+EXE = PA8
 TARPATH = tars/
 
 main: ${CFILES} ${HFILES}

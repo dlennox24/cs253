@@ -28,10 +28,10 @@ Data::~Data(){
 	clusters = NULL;
 }
 
-bool Data::Read(const char* filename, int k){
+bool Data::Read(const char* filename){
 	ifstream istr(filename);
 	if(istr.fail()){
-		cerr << "Error reading file(data.cpp): "<< filename << endl;
+		cerr << "(Data::Read) Error reading file(data.cpp): "<< filename << endl;
 		return false;
 	}
 
@@ -51,23 +51,26 @@ bool Data::Read(const char* filename, int k){
 			cerr << filename <<": Error reading data " << endl;
 			return false;
 		}else{
-			// Add a new cluster to the data object
-			this->Clusters().push_back(new Cluster());
-			// Get that new cluster and add an image to it
-			this->Clusters().at(this->Clusters().size()-1)->Images().push_back(new Image());
-			// Read the image file data into the image object; return false if image failed
-			if(!this->Clusters().at(this->Clusters().size()-1)->Images().at(0)->Read(in.c_str())){
-				return false;
-			}
-			// Re/Calc the histagram average
-			this->Clusters().at(this->Clusters().size()-1)->RecalcHist();
+			this->Images().push_back(new Image());
+			cout<<"testDATA"<<endl;
+			return this->ImageAt(this->Images().size()-1).Read(filename);
+			// // Add a new cluster to the data object
+			// this->Clusters().push_back(new Cluster());
+			// // Get that new cluster and add an image to it
+			// this->Clusters().at(this->Clusters().size()-1)->Images().push_back(new Image());
+			// // Read the image file data into the image object; return false if image failed
+			// if(!this->Clusters().at(this->Clusters().size()-1)->Images().at(0)->Read(in.c_str())){
+			// 	return false;
+			// }
+			// // Re/Calc the histagram average
+			// this->Clusters().at(this->Clusters().size()-1)->RecalcHist();
 		}
 	}
-	if((unsigned)k > this->Clusters().size()){
-		cerr<<"K cannot be larger than the number of input files! K:"<<k;
-		cerr<<" Files:"<<this->Clusters().size()<<endl;
-		return false;
-	}
+	// if((unsigned)k > this->Clusters().size()){
+	// 	cerr<<"K cannot be larger than the number of input files! K:"<<k;
+	// 	cerr<<" Files:"<<this->Clusters().size()<<endl;
+	// 	return false;
+	// }
 	return true;
 }
 
@@ -113,7 +116,7 @@ void Data::Quality(){
 				counts.at(pos) = counts.at(pos) +1;
 			}
 		}
-		
+
 		int high = -1;
 		for(unsigned int j=0;j<counts.size();j++){
 			if(counts.at(j) > high){

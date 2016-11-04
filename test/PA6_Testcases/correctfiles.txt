@@ -1,7 +1,7 @@
-test/PA6_Testcases/class1_00003.pgm
-test/PA6_Testcases/class1_00004.pgm
-test/PA6_Testcases/class2_01521.pgm
-test/PA6_Testcases/class3_00263.pgm
-test/PA6_Testcases/class3_00264.pgm
-test/PA6_Testcases/class4_00379.pgm
-test/PA6_Testcases/class4_00380.pgm
+class1_00003.pgm
+class1_00004.pgm
+class20_01521.pgm
+class3_00263.pgm
+class3_00264.pgm
+class4_00380.pgm
+class4_00379.pgm
