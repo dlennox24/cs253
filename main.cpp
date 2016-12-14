@@ -7,62 +7,63 @@ using std::flush;
 using std::string;
 #include <fstream>
 using std::ifstream;
+#include <sstream>
+#include <algorithm>
+using std::find;
+#include <cmath>
 
 #include <image.h>
 #include <histogram.h>
 #include <data.h>
 #include <perceptron.h>
 
-int classNum(string fname){
-	string classNum = "";
+int extractClassNum(string fname){
 	const char* fnameChar = fname.c_str();
-	unsigned int start = 0;
-	unsigned int stop = 0;
 	unsigned int i=0;
-	if(fnameChar[0] == 'c' && fnameChar[1] == 'l' && fnameChar[2] == 'a'
-	&& fnameChar[3] == 's' && fnameChar[4] == 's'){
-		start = 5;
-		i=5;
-		while(fnameChar[i] != '_' || fname.size() > i){
-			if(fnameChar[i] == '_'){
-				stop = i;
-				break;
+	while(i<fname.length()){
+		if(fnameChar[i] == 'c'){
+			i++;
+			if(fnameChar[i] == 'l'){
+				i++;
+				if(fnameChar[i] == 'a'){
+					i++;
+					if(fnameChar[i] == 's'){
+						i++;
+						if(fnameChar[i] == 's'){
+							i++;
+							string classNum = "";
+							while(i<fname.length()){
+								classNum += fnameChar[i];
+								i++;
+								if(fnameChar[i] == '_'){
+									break;
+								}
+							}
+							return atoi(classNum.c_str());
+						}
+					}
+				}
 			}
-			i++;
 		}
-		if(start > stop){
-			cerr<<"Invalid image filename"<<endl;
-			return -1;
-		}
-		i=start;
-		while(i<stop){
-			classNum += fnameChar[i];
-			i++;
-		}
-		return atoi(classNum.c_str());
+		i++;
 	}
-	cerr<<"Invalid image filename"<<endl;
+	cerr<<"Invalid image filename: "<<fname<<endl;
 	return -1;
 }
 
 int main(int argc, char* argv[]){
-	if(argc != 3){
+	if(argc != 4){
 		cerr << "Invalid number of arguments!" << endl;
-		cerr << "Usage: " << argv[0] << " <filename> <n>" << endl;
+		cerr << "Usage: " << argv[0] << " <filename> <filename> <k>" << endl;
 		return -1;
 	}
-	if(atoi(argv[2]) < 0){
-		cerr<<"N must be > -1"<<endl;
+
+	if(atoi(argv[3]) < 1){
+		cerr<<"K must be > 1"<<endl;
 		return -1;
 	}
-	// if(atoi(argv[3])<1 || atoi(argv[3])>4){
-	// 	cerr<<"Invalid compareType: "<<argv[3]<<endl;
-	// 	return -1;
-	// }
 
 	vector<Image*>* images = new vector<Image*>();
-	//*********************************
-	// Read
 	ifstream istr(argv[1]);
 	if(istr.fail()){
 		cerr << "Error reading file: "<< argv[1] << endl;
@@ -90,29 +91,84 @@ int main(int argc, char* argv[]){
 			}
 		}
 	}
-	// Data data;
-	// if(!data.Read(argv[1])){
-	// 	return -1;
-	// }
-	// cout<<"testMAIN"<<endl;
-	//
-	Perceptron* robot = new Perceptron();
-	for(unsigned int j=0;j<100;j++){
-		for(unsigned int i=0;i<images->size();i++){
-			int fname = classNum(images->at(i)->Fname());
-			int d = -1;
-			if(fname == atoi(argv[2])){
-				d = 1;
-			}
-			robot->Update(images->at(i)->Hist(),d);
+
+	vector<Perceptron*>* robots = new vector<Perceptron*>();
+	vector<int>* classes = new vector<int>();
+	for(unsigned int i=0; i<images->size();i++){
+		int classNum = extractClassNum(images->at(i)->Fname());
+		if(find(classes->begin(),classes->end(), classNum) != classes->end()){
+			// perceptron for that class already exists
+		}else{
+			robots->push_back(new Perceptron());
+			robots->at(robots->size()-1)->SetClassNum(classNum);
 		}
 	}
-	robot->Print();
+
+	if(robots->size()<2){
+		cerr<<"Training file must contain 2 distinct classes"<<endl;
+		return -1;
+	}
+
+	for(unsigned int k = 0; k < robots->size(); k++) {
+		for(unsigned int j=0;j<100;j++){
+			for(unsigned int i=0;i<images->size();i++){
+				int classNum = extractClassNum(images->at(i)->Fname());
+				if(classNum == -1){
+					return -1;
+				}
+				int d = -1;
+				if(classNum == robots->at(k)->ClassNum()){
+					d = 1;
+				}
+				// cout<<d<<endl;
+				robots->at(k)->Update(images->at(i)->Hist(),d);
+			}
+		}
+	}
+	Data data;
+	data.K() = atoi(argv[3]);
+	if(!data.Read(argv[2], atoi(argv[3]))){
+		return -1;
+	}
+
+	while(data.Clusters().size()>(unsigned)data.K()){
+		int in = -1;
+		int from = -1;
+		double difference = -1.0;
+		for(unsigned int i=0;i<data.Clusters().size();i++){
+			unsigned int j=i+1;
+			while(j<data.Clusters().size()){
+				double compare = -1.0;
+				for(unsigned int k=0; k<robots->size();k++){
+					compare += 1/pow((robots->at(k)->ComputeY(data.ClusterAt(i).Hist()) - robots->at(k)->ComputeY(data.ClusterAt(j).Hist())),2);
+				}
+				// cout<<"\t"<<compare<<endl;
+				if(compare > difference){
+					in = i;
+					from = j;
+					difference = compare;
+				}
+				// cout<<i<<"--"<<j<<":"<<compare<<endl;
+				j++;
+			}
+		}
+		// cout<<"================================="<<endl;
+		// data.ClusterAt(in).Print();
+		// cout<<"^"<<endl;
+		// data.ClusterAt(from).Print();
+		// cout<<"MERGE: "<<in<<","<<from<<"\tdiff: "<<difference
+		// <<"\n  size: "<<data.Clusters().size()<<"\tk: "<<data.K()
+		// <<"\n================================="<<endl;
+		data.Merge(in,from);
+	}
+
+	data.Print();
+
 	images->clear();
-	delete robot;
-	// for(unsigned int i=0;i<images->size();i++){
-	// 	delete images->at(i);
-	// }
+	robots->clear();
+	classes->clear();
+	delete robots;
+	delete classes;
 	delete images;
 	return 0;
 }

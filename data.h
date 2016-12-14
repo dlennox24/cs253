@@ -17,7 +17,7 @@ class Data{
 public:
 	Data();
 	~Data();
-	bool Read(const char* filename); // reads a file and attempts to create cluster data
+	bool Read(const char* filename, int k); // reads a file and attempts to create cluster data
 	inline int& K(){return k;}
 	inline vector<Cluster*>& Clusters(){return *clusters;}
 	inline Cluster& ClusterAt(int i){return *clusters->at(i);}
